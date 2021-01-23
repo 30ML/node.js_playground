@@ -40,8 +40,13 @@ Node.js의 API를 단순화하고 유용한 새로운 기능(미들웨어, 라�
 Node.js의 HTTP 개체에 유용한 유틸리티를 추가했고, 동적 HTML 뷰의 렌더링을 용이하게 함
 쉽게 구현된 확장성 표준을 정의함
 
+* 요청 핸들러: 애플리케이션에서 브라우저 요청을 처리하는 자바스크립트 함수
+
+Node.js의 HTTP 서버에서 클라이언트와 자바스크립트 함수 간의 연결을 처리하기 때문에
+까다로운 네트워크 프로토콜을 다룰 필요가 없다.
+
+Client <-> HTTP Server <-> Request Handler(자바스크립트 함수)
 
 
 # Reference
 1. <i>< Express in Action ></i>
-2. 
