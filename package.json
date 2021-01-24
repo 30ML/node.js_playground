@@ -1,0 +1,23 @@
+{
+  "name": "Learn_Express.js",
+  "version": "1.0.0",
+  "description": "Node.js는 강력하지만, 그 API는 때로 힘이 부족해 장황한 코드를 작성하게 함.",
+  "main": "hello-world.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mjdn0011/Learn_Express.js.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mjdn0011/Learn_Express.js/issues"
+  },
+  "homepage": "https://github.com/mjdn0011/Learn_Express.js#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
