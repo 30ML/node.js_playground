@@ -197,7 +197,21 @@ URL Parser 모듈의 핵심은 `parse` 함수임
 Node.js로 웹 서버를 개발할 수 있게 해줌
 Express는 이 모듈 위에 올라감
 
+Node의 http 모듈은 다양한 기능을 갖지만,
+`http.createServer`라는 함수인 `HTTP 서버 컴포넌트`를 사용함
+* `http.createServer` 함수: 서버로 들어오는 요청마다 호출되는 콜백을 취해서, 서버 개체를 반환함
 
+## 요약
+* Node.js를 설치하는 방법은 다양함.
+  * Node.js 사이트 다운로드
+  * OS 패키지 매니저 사용
+  * NVM (권장)
+* Node.js의 모듈 시스템은 `require`라는 전역 함수와 `module.exports`라는 전역 개체를 사용함(CommonJS 방식).
+* npm을 사용해 npm 레지스트리에서 서드파티 패키지를 설치할 수 있음.
+* Node.js는 I/O 이벤트를 다룸.
+  이벤트가 발생할 때(웹 요청 수신 등) 함수(또는 함수 집합)가 호출됨
+* Node.js에는 `http`라는 내장 모듈이 있음.
+  이 모듈은 웹 애플리케이션을 만드는 데 유용함.
 
 # Reference
 1. <i>< Express in Action ></i>
