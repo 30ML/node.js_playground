@@ -213,5 +213,27 @@ Node의 http 모듈은 다양한 기능을 갖지만,
 * Node.js에는 `http`라는 내장 모듈이 있음.
   이 모듈은 웹 애플리케이션을 만드는 데 유용함.
 
+### Node.js HTTP 모듈로 서버 만들기
+```javascript
+// 1. HTTP 모듈 import
+var http = require("http");
+
+// 2. 요청 핸들러 함수 생성
+var requestHandler = function(request, response) {
+  if (request.url === '/') {
+    response.send('Home page');
+  } else {
+    response.send('other page');
+  }
+  response.end('Hello, World!');
+};
+
+// 3. HTTP 모듈의 `createServer` 함수 사용하여 서버 객체 생성
+var server = http.createServer(requestHandler);
+
+// 4. 서버가 특정 포트에서 요청 수신 대기
+server.listen(3000);
+```
+
 # Reference
 1. <i>< Express in Action ></i>
