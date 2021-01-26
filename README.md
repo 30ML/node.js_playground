@@ -235,7 +235,24 @@ var server = http.createServer(requestHandler);
 server.listen(3000);
 ```
 
-Node.js의 http 모듈을 사용해 브라우저에서 HTTP 요청에 응답하는 HTTP 서버를 만들 수 있다. 즉, http 모듈은 Node로 웹사이트를 만들게 해준다.
+Node.js의 http 모듈을 사용해 브라우저에서 HTTP 요청에 응답하는 HTTP 서버를 만들 수 있음. 즉, http 모듈은 Node로 웹사이트를 만들게 해줌
+http 모듈에서 노출하는 API는 아주 최소한이며 많은 귀찮은 작업을 덜어주지 않음.
+
+Express는 Node.js의 내장 HTTP 서버 위에 올라가는 추상 계층
+
+> 아이스크림에서 바닐라는 가장 평범하고 기본적인 맛. 아무것도 추가하거나 섞지 않은 순수한 것을 가리키기 위해 'vanilla'라는 단어를 사용함
+
+### Express의 주요 기능 네 가지
+1. **미들웨어**
+  하나의 함수를 통해서만 요청이 흘러가는 Vanilla Node.js와 대조적으로,
+  Express에는 함수를 효과적으로 배열하는 미들웨어 스택이 있음
+2. **라우팅**
+  특정 HTTP 메서드로, 특정 URL을 방문할 때만 함수가 호출되는 것.
+3. **요청과 응답 개체에 대한 확장**
+  Express에서는 개발자 편의를 위해 추가 메서드와 속성으로 요청 및 응답 개체를 확장
+4. **뷰**
+  뷰를 사용하면 HTML을 동적으로 렌더링할 수 있음
+  뷰에서는 바로 HTML을 변경하고 다른 언어로 HTML을 작성할 수 있음
 
 # Reference
 1. <i>< Express in Action ></i>
