@@ -107,7 +107,7 @@ Express의 주요 기능은 다음과 같음
 Express 애플리케이션은 미들웨어와 라우트를 가짐
 이 둘은 서로를 보완함
 
-### 3. 서브 애플리케이션 (subapplication)
+### 3. 서브 애플리케이션 (sub-application)
 Express 애플리케이션은 파일 하나에 들어갈 정도로 작은 때도 있고,
 애플리케이션이 커지면 여러 개의 폴더와 파일로 나눌 때도 있음
 Express에서는 서브애플리케이션이라는 중요한 기능을 통해 나눔
@@ -234,6 +234,8 @@ var server = http.createServer(requestHandler);
 // 4. 서버가 특정 포트에서 요청 수신 대기
 server.listen(3000);
 ```
+
+Node.js의 http 모듈을 사용해 브라우저에서 HTTP 요청에 응답하는 HTTP 서버를 만들 수 있다. 즉, http 모듈은 Node로 웹사이트를 만들게 해준다.
 
 # Reference
 1. <i>< Express in Action ></i>
