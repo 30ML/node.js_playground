@@ -1,4 +1,4 @@
-/* 서드파티 모듈 */
+/* 3rd-party module */
 
 var Mustache = require("mustache");
 

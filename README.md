@@ -214,7 +214,7 @@ Node의 http 모듈은 다양한 기능을 갖지만,
   이 모듈은 웹 애플리케이션을 만드는 데 유용함.
 
 ### Node.js HTTP 모듈로 서버 만들기
-```javascript
+```js
 // 1. HTTP 모듈 import
 var http = require("http");
 
@@ -222,13 +222,15 @@ var http = require("http");
 var requestHandler = function(request, response) {
   if (request.url === '/') {
     response.send('Home page');
-  } else {
+  } else if (request.url === '/other') {
     response.send('other page');
+  } else {
+    response.send('No page');
   }
   response.end('Hello, World!');
 };
 
-// 3. HTTP 모듈의 `createServer` 함수 사용하여 서버 객체 생성
+// 3. HTTP 모듈의 `createServer` 함수 사용하여, 요청 핸들러를 사용하는 서버 객체 생성
 var server = http.createServer(requestHandler);
 
 // 4. 서버가 특정 포트에서 요청 수신 대기
@@ -253,6 +255,47 @@ Express는 Node.js의 내장 HTTP 서버 위에 올라가는 추상 계층
 4. **뷰**
   뷰를 사용하면 HTML을 동적으로 렌더링할 수 있음
   뷰에서는 바로 HTML을 변경하고 다른 언어로 HTML을 작성할 수 있음
+
+## 미들웨어
+* Express의 가장 중요한 기능
+요청 핸들러와 유사하지만(요청 수신 - 응답 전송),
+미들웨어는 하나의 핸들러라기보다는 순차적으로 여러 번의 처리를 수행할 수 있음
+
+미들웨어는 다양한 애플리케이션을 갖음
+* 모든 요청을 기록하는 미들웨어(1)
+* 각 요청에 대해 특정 HTTP 헤더를 설정하는 미들웨어(2)
+* 등등..
+
+하나의 요청 핸들러로 모든 처리를 수행할 수 있지만,
+서로 다른 작업을 별도 미들웨어 함수로 분해하는 것이 바람직할 때가 많음
+
+### 다른 프레임워크의 '미들웨어'
+* Ruby - Rack 미들웨어
+
+### 미들웨어의 고수준 동작 방식
+Node.js의 HTTP 서버에서 모든 요청은 <u>하나의 큰 함수</u>를 통해 처리됨
+* 미들웨어가 없는 세계에서는 모든 것을 처리하는 하나의 <u>마스터 요청 함수</u>가 있어야 함.
+* 미들웨어를 사용하면 요청은 하나의 함수를 거치기보다는,
+**미들웨어 스택**이라는 <u>함수의 배열</u>을 통과하게 됨
+
+서버를 시작하면 취상위 미들웨어에서 작업을 시작해 아래로 내려가면서 수행함
+
+Express는 ~~함수 하나~~가 아니라 <u>함수들의 배열</u>을 실행하도록 하는 것  
+각 미들웨어 함수는 요청이나 응답을 수정할 수 있음
+
+> 거대한 것 하나보다는 애플리케이션을 여러 개의 작은 부분으로 분할하는 편이 강력하다. 이들 구성요소는 구성과 재배치를 쉽게 해주고, 서드파티 미들웨어를 쉽게 끌어들이기도 한다.
+
+### 패시브 미들웨어: 응답이나 요청을 바꾸지 않는 미들웨어
+```js
+function myFuncMiddleware (request, response, next) {
+  ...
+  next();  // next() 호출은 체인의 다음 미들웨어를 수행함
+}
+```
+
+### 응답이나 요청을 바꾸는 미들웨어
+
+
 
 # Reference
 1. <i>< Express in Action ></i>
