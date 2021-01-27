@@ -276,15 +276,15 @@ http.createServer(app).listen(3000);
 ### <span style="color: #53B991">###</span> *Middleware stack*
 `ONE request handler <-> ARRAY of reqeust handler`
 
-### <span style="color: #53B991">###</span> *passive-middleware*
+### ### *passive-middleware*
 기본적으로 각 미들웨어 함수는 요청이나 응답을 수정할 수 있음
 패시브 미들웨어는 <u>응답이나 요청을 바꾸지 않는 미들웨어</u>
 ex) 로깅 미들웨어
 
-### <span style="color: #53B991">###</span> *static middleware*
+### ### *static middleware*
 `express.static`
 
-### <span style="color: #53B991">###</span> 3rd-party Middleware Library
+### ### 3rd-party Middleware Library
 * *`MORGAN`*: logging
 * *`connect-ratelimit`*: 시간당 특정 요청 수에 대한 요청 수 조절
   누군가 너무 많은 요청을 보낸다면, 사이트가 다운되는 것을 막기 위해 요청 보낸 곳에 에러 표시할 수 있음
@@ -297,9 +297,20 @@ ex) 로깅 미들웨어
 Connect 미들웨어는 Express와 호환됨
 따라서 "Connect middleware"로 검색하여도 Express에서 사용할 수 있는 미들웨어를 발견할 수 있음
   
-## <span style="color: #0E9CE2">##</span> 2. **Routing**
+## ## 2. **Routing**
   특정 <u>HTTP 메서드</u>, 특정 <u>URL</u>을 방문할 때만 함수가 호출되는 것.
-  { HTTP 메서드에 의존하는 특정 핸들러에 대한 요청 }을 URL과 매핑하는 방식.
+  { '특정 HTTP 메서드에 의존하는 특정 핸들러'에 대한 요청 }을 URL과 매핑하는 방식.
+
+```js
+// '/'(루트) URL로 GET 요청이 들어올 때 호출됨
+app.get('/', function(req, res) {
+  res.end("Welcome to my homepage!");
+});
+```
+첫 번째 인수는- 경로
+두 번째 인수는- 요청 핸들러 함수
+
+
 
 ### 3. **요청과 응답 개체에 대한 확장**
   Express에서는 개발자 편의를 위해 추가 메서드와 속성으로 요청 및 응답 객체를 확장
