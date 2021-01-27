@@ -263,28 +263,28 @@ app.use(function(request, response) {
 http.createServer(app).listen(3000);
 ```
 
-# Express의 주요 기능 네 가지
+# <span style="color: #ED3116">#</span> Express의 주요 기능 네 가지
 1. Middleware
 2. Routing
 3. Extensions
 4. Views
 
-## 1. **Middleware**
+## <span style="color: #0E9CE2">##</span> 1. Middleware
 요청 핸들러와 유사하지만(요청 수신 - 응답 전송),
 미들웨어는 하나의 핸들러라기보다는 순차적으로 여러 번의 처리를 수행할 수 있음
 
-### # *Middleware stack*
+### <span style="color: #53B991">###</span> *Middleware stack*
 `ONE request handler <-> ARRAY of reqeust handler`
 
-### # *passive-middleware*
+### <span style="color: #53B991">###</span> *passive-middleware*
 기본적으로 각 미들웨어 함수는 요청이나 응답을 수정할 수 있음
 패시브 미들웨어는 <u>응답이나 요청을 바꾸지 않는 미들웨어</u>
 ex) 로깅 미들웨어
 
-### # *static middleware*
+### <span style="color: #53B991">###</span> *static middleware*
 `express.static`
 
-### 3rd-party Middleware Library
+### <span style="color: #53B991">###</span> 3rd-party Middleware Library
 * *`MORGAN`*: logging
 * *`connect-ratelimit`*: 시간당 특정 요청 수에 대한 요청 수 조절
   누군가 너무 많은 요청을 보낸다면, 사이트가 다운되는 것을 막기 위해 요청 보낸 곳에 에러 표시할 수 있음
@@ -297,7 +297,7 @@ ex) 로깅 미들웨어
 Connect 미들웨어는 Express와 호환됨
 따라서 "Connect middleware"로 검색하여도 Express에서 사용할 수 있는 미들웨어를 발견할 수 있음
   
-## 2. **Routing**
+## <span style="color: #0E9CE2">##</span> 2. **Routing**
   특정 <u>HTTP 메서드</u>, 특정 <u>URL</u>을 방문할 때만 함수가 호출되는 것.
   { HTTP 메서드에 의존하는 특정 핸들러에 대한 요청 }을 URL과 매핑하는 방식.
 
