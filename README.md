@@ -213,7 +213,7 @@ Node의 http 모듈은 다양한 기능을 갖지만,
 * Node.js에는 `http`라는 내장 모듈이 있음.
   이 모듈은 웹 애플리케이션을 만드는 데 유용함.
 
-### Node.js HTTP 모듈로 서버 만들기
+### Node.js - HTTP 모듈로 서버 만들기
 ```js
 // 1. HTTP 모듈 import
 var http = require("http");
@@ -244,22 +244,73 @@ Express는 Node.js의 내장 HTTP 서버 위에 올라가는 추상 계층
 
 > 아이스크림에서 바닐라는 가장 평범하고 기본적인 맛. 아무것도 추가하거나 섞지 않은 순수한 것을 가리키기 위해 'vanilla'라는 단어를 사용함
 
-### Express의 주요 기능 네 가지
-1. **미들웨어**
-  하나의 함수를 통해서만 요청이 흘러가는 Vanilla Node.js와 대조적으로,
-  Express에는 함수를 효과적으로 배열하는 미들웨어 스택이 있음
-2. **라우팅**
-  특정 HTTP 메서드로, 특정 URL을 방문할 때만 함수가 호출되는 것.
-3. **요청과 응답 개체에 대한 확장**
-  Express에서는 개발자 편의를 위해 추가 메서드와 속성으로 요청 및 응답 개체를 확장
-4. **뷰**
+### Express로 서버 만들기
+```js
+// 1. express, http 모듈 import
+var express = require('express');
+var http = require('http');
+
+// 2. 요청 핸들러를 반환하는 express() 호출
+var app = express();
+
+// 3. 요청 핸들러에 미들웨어 등록
+app.use(function(request, response) {
+  console.log('In comes a request to: ' + request.url);
+  response.end('Hello world!');
+});
+
+// 4. 서버 객체 생성 / 특정 포트에서 요청 수신 대기
+http.createServer(app).listen(3000);
+```
+
+## Express의 주요 기능 네 가지
+1. Middleware
+2. Routing
+3. Extensions
+4. Views
+
+### 1. **Middleware**
+요청 핸들러와 유사하지만(요청 수신 - 응답 전송),
+미들웨어는 하나의 핸들러라기보다는 순차적으로 여러 번의 처리를 수행할 수 있음
+
+#### # *Middleware stack*
+`ONE request handler <-> ARRAY of reqeust handler`
+
+#### # *passive-middleware*
+기본적으로 각 미들웨어 함수는 요청이나 응답을 수정할 수 있음
+패시브 미들웨어는 <u>응답이나 요청을 바꾸지 않는 미들웨어</u>
+ex) 로깅 미들웨어
+
+#### # *static middleware*
+`express.static`
+
+#### 3rd-party Middleware Library
+* *`MORGAN`*: logging
+* *`connect-ratelimit`*: 시간당 특정 요청 수에 대한 요청 수 조절
+  누군가 너무 많은 요청을 보낸다면, 사이트가 다운되는 것을 막기 위해 요청 보낸 곳에 에러 표시할 수 있음
+* *`Helmet`*: HTTP 헤더 추가
+  HTTP 헤더를 추가함으로써 앱을 특정 종류의 공격으로부터 더 안전하게 만들어 줌
+* *`cookie-parser`*: 브라우저 쿠키 분석
+* *`response-time`*: 애플리케이션 성능 디버그
+  X-Response-Time 헤더를 전송하기 때문에 애플리케이션의 성능을 디버그할 수 있음
+> Express와 같은 Connect라는 다른 프레임워크가 있음 (Connect는 미들웨어 기능만 수행함)
+Connect 미들웨어는 Express와 호환됨
+따라서 "Connect middleware"로 검색하여도 Express에서 사용할 수 있는 미들웨어를 발견할 수 있음
+  
+### 2. **Routing**
+  특정 <u>HTTP 메서드</u>, 특정 <u>URL</u>을 방문할 때만 함수가 호출되는 것.
+  { HTTP 메서드에 의존하는 특정 핸들러에 대한 요청 }을 URL과 매핑하는 방식.
+
+### 3. **요청과 응답 개체에 대한 확장**
+  Express에서는 개발자 편의를 위해 추가 메서드와 속성으로 요청 및 응답 객체를 확장
+
+### 4. **뷰**
   뷰를 사용하면 HTML을 동적으로 렌더링할 수 있음
   뷰에서는 바로 HTML을 변경하고 다른 언어로 HTML을 작성할 수 있음
 
 ## 미들웨어
 * Express의 가장 중요한 기능
-요청 핸들러와 유사하지만(요청 수신 - 응답 전송),
-미들웨어는 하나의 핸들러라기보다는 순차적으로 여러 번의 처리를 수행할 수 있음
+
 
 미들웨어는 다양한 애플리케이션을 갖음
 * 모든 요청을 기록하는 미들웨어(1)
@@ -281,13 +332,12 @@ Node.js의 HTTP 서버에서 모든 요청은 <u>하나의 큰 함수</u>를 통
 서버를 시작하면 취상위 미들웨어에서 작업을 시작해 아래로 내려가면서 수행함
 
 Express는 ~~함수 하나~~가 아니라 <u>함수들의 배열</u>을 실행하도록 하는 것  
-각 미들웨어 함수는 요청이나 응답을 수정할 수 있음
+
 
 > 거대한 것 하나보다는 애플리케이션을 여러 개의 작은 부분으로 분할하는 편이 강력하다. 이들 구성요소는 구성과 재배치를 쉽게 해주고, 서드파티 미들웨어를 쉽게 끌어들이기도 한다.
 
 ---
 
-* 패시브 미들웨어: 응답이나 요청을 바꾸지 않는 미들웨어
 ```js
 function myFuncMiddleware (request, response, next) {
   ...
@@ -295,12 +345,23 @@ function myFuncMiddleware (request, response, next) {
 }
 ```
 
-* 응답이나 요청을 바꾸는 미들웨어
+### 정적 미들웨어
+`express.static`은 정적 파일 서비스를 도와줌.
+파일을 전송하는 간단한 동작에도 생각해볼만한 <u>경계 값 테스트 문제</u>와 <u>성능 고려사항</u>이 많음 -> 실제로는 많은 작업이 필요
 
-### 서드파티 미들웨어 라이브러리
-#### MORGAN: 로깅 미들웨어
+```js
+// path 모듈 사용하여 path 설정
+var publicPath = path.resolve(__dirname, 'public');
 
+// publicPath 디렉터리에서 정적 파일 전송
+app.use(express.static(publicPath));
 
+// 일치하는 파일이 없을 경우 다음 미들웨어로 넘어감
+app.use(function(request, response) {
+  response.writeHead(200, { 'Content-Type': 'text/plain' });
+  response.end("Looks like you didn't find a static file.");
+});
+```
 
 
 # Reference
