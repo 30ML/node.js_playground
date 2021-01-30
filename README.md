@@ -289,7 +289,7 @@ app.use(function(req, res, next) {
 패시브 미들웨어는 <u>응답이나 요청을 바꾸지 않는 미들웨어</u>
 ex) 로깅 미들웨어
 
-### ### 정적 미들웨어 *`express.static`*
+### ### 정적 미들웨어 *`express.static()`*
 ```js
 // path 모듈 사용하여 path 설정
 var publicPath = path.resolve(__dirname, 'public');
@@ -310,7 +310,7 @@ app.use(express.static(publicPath));
 Connect 미들웨어는 Express와 호환됨
 따라서 "Connect middleware"로 검색하여도 Express에서 사용할 수 있는 미들웨어를 발견할 수 있음
   
-## ## 2. **Routing**
+## ## 2. **라우팅**
 특정 <u>HTTP 메서드</u>, 특정 <u>URL</u>을 방문할 때만 함수가 호출되는 것.
 { '특정 HTTP 메서드에 의존하는 특정 핸들러'에 대한 요청 }을 URL과 매핑하는 방식.
 
@@ -323,7 +323,7 @@ app.get('/', function(req, res) {
 첫 번째 인수는- 경로
 두 번째 인수는- 요청 핸들러 함수
 
-### 3. **요청과 응답 개체에 대한 확장**
+## ## 3. **요청과 응답 개체에 대한 확장**
   Express에서는 개발자 편의를 위해 추가 메서드와 속성으로 요청 및 응답 객체를 확장
 
 ### 4. **뷰**
