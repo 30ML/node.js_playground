@@ -1,5 +1,8 @@
 # Learn_Express.js
 
+* Express Basic
+  * [Middleware](#1. 미들웨어 *`express().use`*)
+
 Node.js는 강력하지만, 그 API는 때로 힘이 부족해 장황한 코드를 작성하게 함.
 
 Express는 Node.js의 웹 서버상에 <u>얹히는</u> 프레임워크임.
@@ -265,7 +268,7 @@ http.createServer(app).listen(3000);
 
 # # Express의 주요 기능 네 가지
 1. **미들웨어**: Middleware
-2. **라우팅**: Routing
+[2. **라우팅**: Routing]()
 3. **확장**: Extensions
 4. **뷰**: Views
 
