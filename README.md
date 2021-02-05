@@ -268,13 +268,13 @@ app.use(function(request, response) {
 http.createServer(app).listen(3000);
 ```
 
-# # Express의 주요 기능 네 가지
+## Express의 주요 기능 네 가지
 1. **미들웨어**: Middleware
-[2. **라우팅**: Routing]()
+2. **라우팅**: Routing
 3. **확장**: Extensions
 4. **뷰**: Views
 
-## ## 1. 미들웨어 *`express().use`*
+## 1. 미들웨어 *`express().use`*
 요청 핸들러와 유사하지만(요청 수신 - 응답 전송),
 미들웨어는 하나의 핸들러라기보다는 순차적으로 여러 번의 처리를 수행할 수 있음
 ```js
@@ -282,19 +282,36 @@ var app = express();
 
 app.use(function(req, res, next) {
   res.end('Hello world!');
+
+  next();  // next() 호출은 체인의 다음 미들웨어를 수행함
 });
 ```
+##### 미들웨어는 다양한 애플리케이션을 가짐
+* 모든 요청을 기록하는 미들웨어
+* 각 요청에 대해 특정 HTTP 헤더를 설정하는 미들웨어
+* 등등
 
-### ### 미들웨어 스택
-~~ONE request handler~~
+#### # 미들웨어 스택
+> ~~ONE request handler~~
 **ARRAY** of reqeust handler
 
-### ### 패시브 미들웨어
+Express는 미들웨어를 통해 ~~함수 하나~~가 아니라 <u>함수들의 배열</u>을 실행하도록 함
+
+##### 미들웨어의 고수준 동작 방식
+* Node.js의 HTTP 서버에서 모든 요청은 <u>하나의 큰 함수(**마스터 요청 함수**)</u>를 통해 처리됨
+* Express의 미들웨어를 사용하면 요청은 하나의 함수를 거치기보다는,
+**미들웨어 스택**이라는 **함수의 배열**을 통과하게 됨
+
+서버를 시작하면 최상위 미들웨어에서 작업을 시작해 아래로 내려가면서 수행함
+
+#### # 패시브 미들웨어
 기본적으로 각 미들웨어 함수는 요청이나 응답을 수정할 수 있음
 패시브 미들웨어는 <u>응답이나 요청을 바꾸지 않는 미들웨어</u>
 ex) 로깅 미들웨어
 
-### ### 정적 미들웨어 *`express.static()`*
+#### # 정적 미들웨어 *`express.static()`*
+`express.static`은 정적 파일 서비스를 도와줌.
+파일을 전송하는 간단한 동작에도 생각해볼만한 <u>경계 값 테스트 문제</u>와 <u>성능 고려사항</u>이 많음 -> 실제로는 많은 작업이 필요
 ```js
 // path 모듈 사용하여 path 설정
 var publicPath = path.resolve(__dirname, 'public');
@@ -302,7 +319,7 @@ var publicPath = path.resolve(__dirname, 'public');
 app.use(express.static(publicPath));
 ```
 
-### ### 서드파티 미들웨어 라이브러리
+#### # 서드파티 미들웨어 라이브러리
 * *`MORGAN`*: logging
 * *`connect-ratelimit`*: 시간당 특정 요청 수에 대한 요청 수 조절
   누군가 너무 많은 요청을 보낸다면, 사이트가 다운되는 것을 막기 위해 요청 보낸 곳에 에러 표시할 수 있음
@@ -315,7 +332,7 @@ app.use(express.static(publicPath));
 Connect 미들웨어는 Express와 호환됨
 따라서 "Connect middleware"로 검색하여도 Express에서 사용할 수 있는 미들웨어를 발견할 수 있음
   
-## ## 2. **라우팅**
+### 2. 라우팅
 특정 <u>HTTP 메서드</u>, 특정 <u>URL</u>을 방문할 때만 함수가 호출되는 것.
 { '특정 HTTP 메서드에 의존하는 특정 핸들러'에 대한 요청 }을 URL과 매핑하는 방식.
 
@@ -328,68 +345,15 @@ app.get('/', function(req, res) {
 첫 번째 인수는- 경로
 두 번째 인수는- 요청 핸들러 함수
 
-## ## 3. **요청과 응답 개체에 대한 확장**
+### 3. 확장: 요청과 응답 객체에 대한 확장
   Express에서는 개발자 편의를 위해 추가 메서드와 속성으로 요청 및 응답 객체를 확장
 
-### 4. **뷰**
+### 4. 뷰
   뷰를 사용하면 HTML을 동적으로 렌더링할 수 있음
   뷰에서는 바로 HTML을 변경하고 다른 언어로 HTML을 작성할 수 있음
 
-## 미들웨어
-* Express의 가장 중요한 기능
-
-
-미들웨어는 다양한 애플리케이션을 갖음
-* 모든 요청을 기록하는 미들웨어(1)
-* 각 요청에 대해 특정 HTTP 헤더를 설정하는 미들웨어(2)
-* 등등..
-
-하나의 요청 핸들러로 모든 처리를 수행할 수 있지만,
-서로 다른 작업을 별도 미들웨어 함수로 분해하는 것이 바람직할 때가 많음
-
-### 다른 프레임워크의 '미들웨어'
-* Ruby - Rack 미들웨어
-
-### 미들웨어의 고수준 동작 방식
-Node.js의 HTTP 서버에서 모든 요청은 <u>하나의 큰 함수</u>를 통해 처리됨
-* 미들웨어가 없는 세계에서는 모든 것을 처리하는 하나의 <u>마스터 요청 함수</u>가 있어야 함.
-* 미들웨어를 사용하면 요청은 하나의 함수를 거치기보다는,
-**미들웨어 스택**이라는 <u>함수의 배열</u>을 통과하게 됨
-
-서버를 시작하면 취상위 미들웨어에서 작업을 시작해 아래로 내려가면서 수행함
-
-Express는 ~~함수 하나~~가 아니라 <u>함수들의 배열</u>을 실행하도록 하는 것  
-
-
-> 거대한 것 하나보다는 애플리케이션을 여러 개의 작은 부분으로 분할하는 편이 강력하다. 이들 구성요소는 구성과 재배치를 쉽게 해주고, 서드파티 미들웨어를 쉽게 끌어들이기도 한다.
 
 ---
-
-```js
-function myFuncMiddleware (request, response, next) {
-  ...
-  next();  // next() 호출은 체인의 다음 미들웨어를 수행함
-}
-```
-
-### 정적 미들웨어
-`express.static`은 정적 파일 서비스를 도와줌.
-파일을 전송하는 간단한 동작에도 생각해볼만한 <u>경계 값 테스트 문제</u>와 <u>성능 고려사항</u>이 많음 -> 실제로는 많은 작업이 필요
-
-```js
-// path 모듈 사용하여 path 설정
-var publicPath = path.resolve(__dirname, 'public');
-
-// publicPath 디렉터리에서 정적 파일 전송
-app.use(express.static(publicPath));
-
-// 일치하는 파일이 없을 경우 다음 미들웨어로 넘어감
-app.use(function(request, response) {
-  response.writeHead(200, { 'Content-Type': 'text/plain' });
-  response.end("Looks like you didn't find a static file.");
-});
-```
-
 
 # Reference
 1. <i>< Express in Action ></i>
