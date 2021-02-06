@@ -25,6 +25,13 @@ app.get('/weather', function(req, res) {
   res.end("Current weather is NICE.");
 });
 
+// 동적 URL
+// 경로의 "hello" 부분 고정, req.params는 who 속성을 가짐
+// 보안 이슈를 가지고 있음 ;(
+app.get('/hello/:who', function(req, res) {
+  res.end("Hello, " + req.params.who + ".");
+});
+
 // 요청에 해당하는 매핑이 없을 경우 호출됨
 app.use(function(req, res) {
   res.statusCode = 404;

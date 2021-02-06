@@ -330,25 +330,107 @@ app.use(express.static(publicPath));
 Connect 미들웨어는 Express와 호환됨
 따라서 "Connect middleware"로 검색하여도 Express에서 사용할 수 있는 미들웨어를 발견할 수 있음
   
-### 2. 라우팅
-특정 <u>HTTP 메서드</u>, 특정 <u>URL</u>을 방문할 때만 함수가 호출되는 것.
-{ '특정 HTTP 메서드에 의존하는 특정 핸들러'에 대한 요청 }을 URL과 매핑하는 방식.
+### 2. 라우팅 *`express().[method]([url], [callback])`*
+<u>특정 HTTP 메서드</u>, <u>특정 URL</u>을 방문할 때만 함수가 호출되는 것
+{ '특정 HTTP 메서드에 의존하는 특정 핸들러'에 대한 요청 }을 URL과 매핑하는 방식
+
+* 첫 번째 인수 - 경로
+* 두 번째 인수 - 요청 핸들러 함수
 
 ```js
-// '/'(루트) URL로 GET 요청이 들어올 때 호출됨
+var publicPath = path.resolve(__dirname, "public");
+
+// 정적 미들웨어
+app.use(express.static(publicPath));
+
+// '/'(루트) URL로 GET 요청이 들어올 때 호출
 app.get('/', function(req, res) {
   res.end("Welcome to my homepage!");
 });
+
+// '/about'으로 GET 요청이 들어올 때 호출
+app.get('/about', function(req, res) {
+  res.end("Welcome to the about page!");
+});
+
+// 동적 URL
+// 경로의 "hello" 부분 고정, req.params는 who 속성을 가짐
+// 보안 이슈를 가지고 있음 ;(
+app.get("/hello/:who", function(req, res) {
+  res.end("Hello, " + req.params.who + ".");
+});
+
+// 요청에 해당하는 매핑이 없을 경우 호출
+app.use(function(req, res) {
+  res.status = 404;
+  res.end("404!");
+});
 ```
-첫 번째 인수는- 경로
-두 번째 인수는- 요청 핸들러 함수
 
 ### 3. 확장: 요청과 응답 객체에 대한 확장
-  Express에서는 개발자 편의를 위해 추가 메서드와 속성으로 요청 및 응답 객체를 확장
+Express에서는 개발자 편의를 위해 추가 메서드와 속성으로 요청 및 응답 객체를 확장
+기본적으로 Node.js에는 아래와 같은 메서드가 없음
 
-### 4. 뷰
-  뷰를 사용하면 HTML을 동적으로 렌더링할 수 있음
-  뷰에서는 바로 HTML을 변경하고 다른 언어로 HTML을 작성할 수 있음
+#### # *res.redirect*
+
+```js
+res.redirect("/hello/world");
+res.redirect("http://expressjs.com");
+```
+
+#### # *res.sendFile*
+```js
+res.sendFile("/path/to/blues_guitar.mp3");
+```
+
+#### # *req.ip*
+```js
+/* 특정 IP 블랙리스트로 관리하기 */
+var EVIL_IP = "123.45.67.89"
+
+app.use(function(req, res, next) {
+  if (req.ip === EVIL_IP) {
+    res.status(401).send("Not Allowed!");
+  } else {
+    next();
+  }
+});
+
+app.use(function(req, res) {
+  res.end("Hello :)");
+});
+```
+
+#### # *req.get*
+HTTP 헤더 얻기
+
+### 4. 뷰 *`express().set()`*
+뷰를 사용하면 HTML을 동적으로 렌더링할 수 있음
+뷰에서는 바로 HTML을 변경하고 다른 언어로 HTML을 작성할 수 있음
+
+HTML을 생성하는 것들
+* EJS(Embedded JavaScript)
+* Handlebars
+* Pug
+
+#### Express에서 뷰 설정하기
+```js
+/* Express에서 뷰 설정하기 */
+// View Directory: Express에게 views라는 폴더에 뷰가 있음을 알려줌
+app.set("views", path.resolve(__dirname, "views"));
+// View Engine: Express에게 EJS 템플릿 엔진을 사용할 것이라고 알려줌
+app.set("view engine", "ejs");
+
+app.get('/', function(res, req) {
+  // 변수 전달 및 index.ejs 렌더링
+  res.render('index', {
+    message: "Hey everyone! This is my webpage.",
+  });
+})
+
+```
+
+
 
 ---
 
