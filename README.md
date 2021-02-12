@@ -1,11 +1,10 @@
 # Learn_Express.js
 
 Node.js는 강력하지만, 그 API는 때로 힘이 부족해 장황한 코드를 작성하게 함.
+일반적으로 Vanilla API는 장황함(Node.js).
 
 Express는 Node.js의 웹 서버상에 <u>얹히는</u> 프레임워크임.
 Node.js 웹 서버 최상위의 경량 계층으로 동작하는 프레임워크인 Express
-
-일반적으로 Vanilla API는 장황함(Node.js).
 
 이런 면에서 Express는 철학적으로 jQuery와 유사함.
   1. Vanilla API의 장황함을 단순화
