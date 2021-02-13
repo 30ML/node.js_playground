@@ -429,8 +429,6 @@ app.get('/', function(res, req) {
 
 ```
 
-
-
 ---
 
 # Reference
