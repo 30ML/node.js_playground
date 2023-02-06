@@ -1,0 +1,7 @@
+{
+  "name": "day01",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "resident-registration-number.js",
+  "license": "MIT"
+}
